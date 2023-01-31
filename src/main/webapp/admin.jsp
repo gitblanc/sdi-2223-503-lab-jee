@@ -1,5 +1,6 @@
 <%@ page import="com.uniovi.sdi.ProductsService" %>
-<%@ page import="com.uniovi.sdi.Product" %>
+<jsp:useBean id="product" class="com.uniovi.sdi.Product"/>
+<jsp:setProperty name="product" property="*"/>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
@@ -20,12 +21,7 @@
     }
 %>
 <%
-    if (request.getParameter("name") != null &&
-            request.getParameter("image") != null && request.getParameter("price") != null) {
-        String name = request.getParameter("name");
-        String image = request.getParameter("image");
-        float price = Float.parseFloat(request.getParameter("price"));
-        Product product = new Product(name, image, price);
+    if (product.getName() != null) {//ahora debemos comprobar el valor de las propiedades del producto (pág 44 Lab1)
         new ProductsService().setNewProduct(product);
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
