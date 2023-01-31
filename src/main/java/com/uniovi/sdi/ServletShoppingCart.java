@@ -23,6 +23,9 @@ public class ServletShoppingCart extends HttpServlet {
         if (product != null) {
             addToShoppingCart(cart, product);
         }
+        request.setAttribute("selectedItems", cart);
+        getServletContext().getRequestDispatcher("/cart.jsp").forward(request, response);
+        /* Eliminado al usar el patrón MVC
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -32,6 +35,7 @@ public class ServletShoppingCart extends HttpServlet {
         out.println(shoppingCartToHtml(cart) + "<br>");
         //out.println("<a href=\"shop.html\">Volver</a></BODY></HTML>");
         out.println("<a href=\"index.jsp\">Volver</a></BODY></HTML>");
+        */
     }
 
     @Override
@@ -41,18 +45,18 @@ public class ServletShoppingCart extends HttpServlet {
     }
 
     private void addToShoppingCart(Map<String, Integer> cart, String productKey) {
-        if(cart.get(productKey) == null) //si no existe en el carrito
+        if (cart.get(productKey) == null) //si no existe en el carrito
             cart.put(productKey, Integer.valueOf(1));
-        else{
+        else {
             int productCount = (Integer) cart.get(productKey).intValue();
             cart.put(productKey, Integer.valueOf(productCount + 1));
         }
     }
 
-    private String shoppingCartToHtml(Map<String, Integer> cart){
+    private String shoppingCartToHtml(Map<String, Integer> cart) {
         String shoppingCartToHtml = "";
 
-        for(String key: cart.keySet())//se va creando el html de los productos del carrito
+        for (String key : cart.keySet())//se va creando el html de los productos del carrito
             shoppingCartToHtml += "<p>[" + key + "], " + cart.get(key) + "unidades</p>";
         return shoppingCartToHtml;
     }
