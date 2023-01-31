@@ -2,6 +2,7 @@
 <%@ page import="com.uniovi.sdi.Product" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="counter" class="com.uniovi.sdi.Counter" scope="application"/>
 <jsp:setProperty name="counter" property="increase" value="1"/>
 <html lang="en">
@@ -36,22 +37,25 @@
         <div class="nav navbar-right">
             <!-- cambiar por el bean -->
             <%--- <<%=counter%> Visitas ---%>
-            <jsp:getProperty name="counter" property="total"/>Visitas
+            <jsp:getProperty name="counter" property="total"/>
+            Visitas
         </div>
     </div>
 </nav>
 <!-- Contenido -->
 <div class="container" id="main-container"><h2>Productos</h2>
-    <div class="row "><% List<Product> listProducts = new ProductsService().getProducts();
-        for (Product product : listProducts) { %>
-        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-            <div><img src="<%=product.getImage() %>"/>
-                <div><%=product.getName() %>
+    <div class="row ">
+        <jsp:useBean id="productsService" class="com.uniovi.sdi.ProductsService"/>
+        <c:forEach var="product" begin="0" items="${productsService.products}">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div>
+                    <img src="<c:out value="${product.image}"/>"/>
+                    <div><c:out value="${product.name}"/></div>
+                    <a href="AddToShoppingCart?product=<c:out value="${product.name}"/>" class="btn btn-default">
+                        <c:out value="${product.price}"/> € </a>
                 </div>
-                <a href="AddToShoppingCart?product=<%=product.getName() %>"
-                   class="btn btn-default"><%=product.getPrice() %> € </a></div>
-        </div>
-        <% } %>
+            </div>
+        </c:forEach>
     </div>
 </div>
 </body>

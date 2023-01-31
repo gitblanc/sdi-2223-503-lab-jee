@@ -1,7 +1,6 @@
 <%@ page import="com.uniovi.sdi.ProductsService" %>
-<jsp:useBean id="product" class="com.uniovi.sdi.Product"/>
-<jsp:setProperty name="product" property="*"/>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head><title>Servlets</title>
@@ -12,6 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
+<%-- Cambiado por las etiquetas JSTL
 <%
     String user = (String) request.getSession().getAttribute("user");
     System.out.println("Usuario en sesión: " + user);
@@ -20,12 +20,28 @@
         response.sendRedirect("login.jsp");
     }
 %>
+--%>
+<c:if test="${sessionScope.user != 'admin'}">
+    <c:redirect url="/login.jsp"/>
+</c:if>
+
+<jsp:useBean id="product" class="com.uniovi.sdi.Product"/>
+<jsp:setProperty name="product" property="*"/>
+
+<%-- Cambiado por las etiquetas JSTL
 <%
     if (product.getName() != null) {//ahora debemos comprobar el valor de las propiedades del producto (pág 44 Lab1)
         new ProductsService().setNewProduct(product);
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 %>
+--%>
+<c:if test="${product.name != null}">
+    <jsp:useBean id="productsService" class="com.uniovi.sdi.ProductsService"/>
+    <jsp:setProperty name="productsService" property="newProduct" value="${product}"/>
+    <c:redirect url="/index.jsp"/>
+</c:if>
+
 <!-- Contenido -->
 <div class="container" id="main-container"><h2>Agregar producto a la tienda</h2>
     <form class="form-horizontal" method="post" action="admin.jsp">
