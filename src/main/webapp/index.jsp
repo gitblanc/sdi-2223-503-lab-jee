@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
 <html lang="en">
 <head><title>Servlets</title>
     <meta charset="utf-8"/>
@@ -13,9 +13,11 @@
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
             <div><img src="images/iconfinder_apple.png"/>
                 <div>Manzanas</div>
-                <a href="AddToShoppingCart?product=apple" class="btn btn-default"> 2.05 € </a></div>
+                <a href="AddToShoppingCart?product=apple" class="btn btn-default"> 2.05 €
+                </a>
+            </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+        <div class=" col-xs-12 col-sm-6 col-md-4 col-lg-3">
             <div><img src="images/iconfinder_strawberry.png"/>
                 <div>Fresas</div>
                 <a href="AddToShoppingCart?product=strawberry" class="btn btn-default"> 2.20 € </a></div>
